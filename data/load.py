@@ -30,7 +30,10 @@ print(results[-1])  ## inspect the last one, should be from the benign split
 
 
 
-
+def load_benign():
+    alpaca_data = load_dataset("tatsu-lab/alpaca")
+    sampled = alpaca_data["train"].shuffle(seed=42).select(range(300))
+    
 
 
 
