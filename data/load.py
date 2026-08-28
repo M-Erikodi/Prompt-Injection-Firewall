@@ -27,3 +27,5 @@ results = load_jailbreakbench()
 print(len(results)) ##should be 200 (100 harmful + 100 benign)
 print(results[0])   ## inspect the first LabeledPrompt
 print(results[-1])  ## inspect the last one, should be from the benign split
+
+
