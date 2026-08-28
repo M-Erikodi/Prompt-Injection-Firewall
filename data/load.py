@@ -21,3 +21,8 @@ def load_jailbreakbench():
             results.append(LabeledPrompt(prompt=row["Goal"], label=label, source="jailbreakbench", attack_type=attack_type))
 
     return results
+
+results = load_jailbreakbench()
+print(len(results)) ##should be 200 (100 harmful + 100 benign)
+print(results[0])   ## inspect the first LabeledPrompt
+print(results[-1])  ## inspect the last one, should be from the benign split
