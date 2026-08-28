@@ -33,7 +33,11 @@ print(results[-1])  ## inspect the last one, should be from the benign split
 def load_benign():
     alpaca_data = load_dataset("tatsu-lab/alpaca")
     sampled = alpaca_data["train"].shuffle(seed=42).select(range(300))
-    
+    results = []
+    for row in sampled:
+        results.append(LabeledPrompt(prompt=row["instruction"], label=0, source="alpaca", attack_type=None))
+    return results
+
 
 
 
