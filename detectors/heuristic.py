@@ -9,7 +9,9 @@ PATTERNS = [
     # TODO: expand this list during days 3-4.
     # Keep patterns specific enough to avoid false positives on benign prompts
     # that legitimately discuss instructions, roleplay, or encoding.
+
     r"ignore (all|any|the) (previous|prior|above) instructions",
+    r"you (will|must|should) (be|act|respond) as", 
     r"you are now",
     r"disregard (all|any) (previous|prior) (rules|instructions)",
     r"system prompt",
