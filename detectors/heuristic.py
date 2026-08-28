@@ -11,8 +11,11 @@ PATTERNS = [
     # that legitimately discuss instructions, roleplay, or encoding.
 
     r"ignore (all|any|the) (previous|prior|above) instructions",
+    r"act as",
+    r"act as if you are",
     r"you (will|must|should) (be|act|respond) as", 
-    r"you are now",
+    r"you are (now|no longer|not) "
+    r"you are",
     r"disregard (all|any) (previous|prior) (rules|instructions)",
     r"system prompt",
     r"jailbreak",
