@@ -42,6 +42,18 @@ def load_jailbreakbench():
 
     return results
 
+def load_jailbreakhub():
+    jbh_data = load_dataset("walledai/JailbreakHub")
+    results = []
+    for row in jbh_data["train"]:
+        results.append(LabeledPrompt(
+            prompt=row["prompt"],
+            label=1,  ## everything in JailbreakHub is an attack by definition
+            source="jailbreakhub",
+            attack_type=row["attack_type"]
+        ))
+    return results
+
 
 def load_benign():
     """
