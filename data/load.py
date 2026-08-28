@@ -46,11 +46,13 @@ def load_jailbreakhub():
     jbh_data = load_dataset("walledai/JailbreakHub")
     results = []
     for row in jbh_data["train"]:
+        if not row["jailbreak"]:
+            continue
         results.append(LabeledPrompt(
             prompt=row["prompt"],
-            label=1,  ## everything in JailbreakHub is an attack by definition
+            label=1,
             source="jailbreakhub",
-            attack_type=row["attack_type"]
+            attack_type=row["platform"]
         ))
     return results
 
