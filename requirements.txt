@@ -1,0 +1,26 @@
+# Core
+pandas
+numpy
+scikit-learn
+datasets
+
+# Service
+fastapi
+uvicorn[standard]
+pydantic
+
+# Dashboard
+streamlit
+
+# ML classifier (week 3)
+sentence-transformers
+transformers
+torch
+
+# Eval / notebooks
+jupyter
+matplotlib
+
+# Dev
+pytest
+python-dotenv
