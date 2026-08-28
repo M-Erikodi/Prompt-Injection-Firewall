@@ -18,6 +18,6 @@ def load_jailbreakbench():
 
     for split, label in [("harmful", 1), ("benign", 0)]:
         for row in jbb_data[split]:
-            results.append((row["Goal"], label))
+            LabeledPrompt((row["Goal"], label))
 
     return results
