@@ -1,5 +1,10 @@
 from eval.schema import LabeledPrompt
 from datasets import load_dataset
+import json
+import os
+from dataclasses import asdict
+
+CACHE_PATH = "data/processed/combined.json"
 
 ## JailbreakBench
 ##jbb_data = load_dataset("JailbreakBench/JBB-Behaviors", "behaviors")
@@ -11,9 +16,6 @@ from datasets import load_dataset
 ##print(alpaca_data)
 ##print(alpaca_data["train"][0])
 
-
-from eval.schema import LabeledPrompt
-from datasets import load_dataset
 
 
 def load_jailbreakbench():
@@ -66,6 +68,19 @@ def load_benign():
 
 def load_all():
     """Combine JailbreakBench (attacks + its own benign set) and Alpaca (benign) into one dataset."""
+
+    if os.path.exists(CACHE_PATH):
+        with open(CACHE_PATH, "r") as f:
+            raw_data = json.load(f)
+        return [LabeledPrompt(**row) for row in raw_data]
+
+    data = load_jailbreakbench() + load_benign()
+
+    with open(CACHE_PATH, "w") as f:
+        json.dump([asdict(item) for item in data], f, indent=2)
+
+    return data
+
     return load_jailbreakbench() + load_benign()
 
 
@@ -82,11 +97,3 @@ if __name__ == "__main__":
 
 
 
-
-
-## Test locally, does not run if our file is run outside of this directory
-if __name__ == "__main__":
-    benign = load_benign()
-    print(len(benign))
-    print(benign[0])
-    print(benign[-1])
