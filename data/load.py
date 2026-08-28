@@ -18,6 +18,7 @@ def load_jailbreakbench():
 
     for split, label in [("harmful", 1), ("benign", 0)]:
         for row in jbb_data[split]:
+            attack_type = row["Catagory"] if label == 1 else None
             LabeledPrompt((row["Goal"], label))
 
     return results
