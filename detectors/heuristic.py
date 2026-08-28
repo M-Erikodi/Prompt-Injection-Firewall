@@ -4,6 +4,12 @@ Built in Week 2 (Days 3-5). Every rule added here should be re-run through
 eval.harness.evaluate() so its precision/recall/FPR impact is measured immediately.
 """
 import re
+from eval.harness import evaluate
+from detectors.heuristic import score
+from data.load import load_all
+
+results = evaluate(score, load_all(), threshold=0.5)
+print(results)
 
 PATTERNS = [
     # TODO: expand this list during days 3-4.

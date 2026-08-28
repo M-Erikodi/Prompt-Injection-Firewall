@@ -81,21 +81,19 @@ def load_benign():
 
 
 def load_all():
-    """Combine JailbreakBench (attacks + its own benign set) and Alpaca (benign) into one dataset."""
+    """Combine JailbreakBench (attacks + its own benign set) and Alpaca (benign) and the JailbreakHub (attacks) into one dataset."""
 
     if os.path.exists(CACHE_PATH):
         with open(CACHE_PATH, "r") as f:
             raw_data = json.load(f)
         return [LabeledPrompt(**row) for row in raw_data]
 
-    data = load_jailbreakbench() + load_benign()
+    data = load_jailbreakbench() + load_benign() + load_jailbreakhub()
 
     with open(CACHE_PATH, "w") as f:
         json.dump([asdict(item) for item in data], f, indent=2)
 
     return data
-
-    return load_jailbreakbench() + load_benign()
 
 
 ## Only runs when this file is executed directly (e.g. `python -m data.load`),
