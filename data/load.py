@@ -13,7 +13,6 @@ print(alpaca_data["train"][0])
 
 
 def load_jailbreakbench():
-    jbb_data = load_dataset("JailbreakBench/JBB-Behaviors", "behaviors")
     results = []
 
     for split, label in [("harmful", 1), ("benign", 0)]:
