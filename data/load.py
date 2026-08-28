@@ -29,3 +29,20 @@ print(results[0])   ## inspect the first LabeledPrompt
 print(results[-1])  ## inspect the last one, should be from the benign split
 
 
+
+
+
+
+
+
+
+
+
+
+
+## Test locally, does not run if our file is run outside of this directory
+if __name__ == "__main__":
+    benign = load_benign()
+    print(len(benign))
+    print(benign[0])
+    print(benign[-1])
