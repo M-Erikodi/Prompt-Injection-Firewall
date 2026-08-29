@@ -6,9 +6,7 @@ eval.harness.evaluate() so its precision/recall/FPR impact is measured immediate
 import re
 
 PATTERNS = [
-    # TODO: expand this list during days 3-4.
-    # Keep patterns specific enough to avoid false positives on benign prompts
-    # that legitimately discuss instructions, roleplay, or encoding.
+    ## these were found by combing through the data sets and assessing "manually" the verbal similarities between the prompts that were "missed"
 
     r"ignore (all|any|the) (previous|prior|above) instructions",
     r"act as",
