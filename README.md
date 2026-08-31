@@ -104,7 +104,7 @@ test both layers under attack:
     uvicorn service.main:app --reload      # starts the API
     streamlit run service/dashboard.py     # starts the dashboard
 
-## What I'd Do Next
+## Reccomended Improvements Online
 
 - Fine-tune a small transformer (DistilBERT) instead of logistic regression
   over embeddings, to see if it closes the character-spacing gap.
