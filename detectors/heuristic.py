@@ -6,7 +6,7 @@ eval.harness.evaluate() so its precision/recall/FPR impact is measured immediate
 import re
 
 PATTERNS = [
-    ## these were found by combing through the data sets and assessing "manually" the verbal similarities between the prompts that were "missed"
+    ##these were found by combing through the data sets and assessing "manually" the verbal similarities between the prompts that were "missed"
 
     r"ignore (all|any|the) (previous|prior|above) instructions",
     r"act as",
