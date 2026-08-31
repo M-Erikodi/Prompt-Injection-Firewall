@@ -8,7 +8,7 @@ LLM applications — Full write-up: [LLM_Prompt_Injection_Write_Up.pdf](LLM_Prom
 ## The Problem
 
 Prompt injection is the #1 risk on OWASP's Top 10 for LLM Applications. Most
-teams deploying chatbots, agents, or RAG systems have zero input-layer defence —
+teams deploying chatbots, agents, or RAG systems have zero input-layer defence
 an attacker can hijack model behaviour by hiding instructions in user input
 ("ignore previous instructions...") or in retrieved content the model reads.
 This project builds a testable, evaluatable defence layer rather than assuming
@@ -18,11 +18,11 @@ the problem away.
 
 Detection is layered, not single-stage:
 
-1. **Heuristic layer** (regex/keyword patterns) runs first — fast, cheap,
-   near-zero false positive rate. If it fires with high confidence, the
+1. **Heuristic layer** (regex/keyword patterns) runs first fast, cheap,
+   near zero false positive rate. If it fires with high confidence, the
    request is blocked immediately.
 2. **ML classifier** (sentence embeddings + logistic regression) runs only if
-   heuristics pass the prompt through — slower, more expensive, but catches
+   heuristics pass the prompt through slower, more expensive, but catches
    paraphrased/novel attacks heuristics structurally can't.
 
 This mirrors real production security systems (WAFs, spam filters): cheap
