@@ -54,8 +54,8 @@ Three sources, normalised into a single labelled schema:
 | Heuristics | 99.89% | 60.27% | 0.25% |
 | ML Classifier (threshold 0.7) | 98.94% | 92.69% | 3.75% |
 
-Heuristics catch obvious, previously-seen phrasing with almost no false alarms,
-but miss ~40% of real attacks by design — they can't generalise past exact
+Heuristics catch obvious, previously seen phrasing with almost no false alarms,
+but miss ~40% of real attacks by design they can't generalise past exact
 patterns. The classifier closes most of that gap by working on semantic
 meaning rather than literal text, at a small, tunable cost in false positives.
 
