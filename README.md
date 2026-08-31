@@ -78,13 +78,13 @@ test both layers under attack:
 
 ## Known Limitations
 
-- No defence against character-level obfuscation (spacing, homoglyphs on
+- No defence against character level obfuscation (spacing, homoglyphs on
   every trigger word).
-- No multi-turn context — each request is evaluated independently.
+- No multi turn context: each request is evaluated independently.
 - JailbreakBench's "benign" split contains ethically ambiguous content that
   isn't truly benign in the everyday sense, which inflates the classifier's
   measured false-positive rate somewhat.
-- Classifier decisions aren't interpretable — no explanation for why a score
+- Classifier decisions aren't interpretable: no explanation for why a score
   was assigned, unlike heuristics where the matched pattern is known.
 
 ## Project Structure
