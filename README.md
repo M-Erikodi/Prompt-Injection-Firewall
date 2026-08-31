@@ -5,7 +5,7 @@ prompts for injection/jailbreak likelihood before they reach the model. Built to
 explore both the security and ML sides of a real, unsolved problem in deployed
 LLM applications.
 
-Full write-up: [LLM_Prompt_Injection_Write_Up.pdf](LLM Prompt Injection Write Up.pdf)
+Full write-up: [LLM Prompt Injection Write Up.pdf](LLM_Prompt_Injection_Write_Up.pdf)
 
 ## The Problem
 
