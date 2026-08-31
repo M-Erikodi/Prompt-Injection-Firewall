@@ -1,17 +1,17 @@
-# Prompt Injection Detection Firewall
+# LLM Prompt Injection Detection Firewall
 
-A lightweight defense layer that sits between users and an LLM, scoring incoming
+A lightweight defence layer that sits between users and an LLM, scoring incoming
 prompts for injection/jailbreak likelihood before they reach the model. Built to
 explore both the security and ML sides of a real, unsolved problem in deployed
-LLM applications.
+LLM applications — Full write-up: [LLM_Prompt_Injection_Write_Up.pdf](LLM_Prompt_Injection_Write_Up.pdf)
 
 ## The Problem
 
 Prompt injection is the #1 risk on OWASP's Top 10 for LLM Applications. Most
-teams deploying chatbots, agents, or RAG systems have zero input-layer defense —
-an attacker can hijack model behavior by hiding instructions in user input
+teams deploying chatbots, agents, or RAG systems have zero input-layer defence —
+an attacker can hijack model behaviour by hiding instructions in user input
 ("ignore previous instructions...") or in retrieved content the model reads.
-This project builds a testable, evaluatable defense layer rather than assuming
+This project builds a testable, evaluatable defence layer rather than assuming
 the problem away.
 
 ## Architecture
@@ -29,11 +29,23 @@ This mirrors real production security systems (WAFs, spam filters): cheap
 deterministic rules filter the obvious cases; an expensive learned model only
 runs when needed.
 
-## Results
+## Data
 
-Evaluated on a combined dataset of ~1,900 labeled prompts (JailbreakBench,
-JailbreakHub, Alpaca as benign baseline), with a held-out 20% test split for
-the classifier.
+Three sources, normalised into a single labelled schema:
+
+- **JailbreakBench** — initially assumed to be prompt-injection examples;
+  turned out to be direct harmful-content requests ("write a defamatory
+  article"), a different problem from injection. Kept as a secondary signal
+  once the mismatch was caught.
+- **JailbreakHub** — ~1,400 real jailbreak prompts scraped from Reddit/Discord,
+  the actual source of persona-override and hypothetical-framing attacks used
+  to build and test the detectors.
+- **Alpaca** — sampled as the benign baseline, used to measure false positives
+  rather than just catches.
+
+~1,900 labelled prompts total, with an 80/20 train/test split for the classifier.
+
+## Results
 
 | Detector | Precision | Recall | FPR |
 |---|---|---|---|
@@ -41,7 +53,7 @@ the classifier.
 | ML Classifier (threshold 0.7) | 98.94% | 92.69% | 3.75% |
 
 Heuristics catch obvious, previously-seen phrasing with almost no false alarms,
-but miss ~40% of real attacks by design — they can't generalize past exact
+but miss ~40% of real attacks by design — they can't generalise past exact
 patterns. The classifier closes most of that gap by working on semantic
 meaning rather than literal text, at a small, tunable cost in false positives.
 
@@ -66,12 +78,12 @@ test both layers under attack:
 
 ## Known Limitations
 
-- No defense against character-level obfuscation (spacing, homoglyphs on
+- No defence against character-level obfuscation (spacing, homoglyphs on
   every trigger word).
 - No multi-turn context — each request is evaluated independently.
-- One of the source datasets (JailbreakBench's "benign" split) contains
-  ethically ambiguous content that isn't truly benign in the everyday sense,
-  which inflates the classifier's measured false-positive rate somewhat.
+- JailbreakBench's "benign" split contains ethically ambiguous content that
+  isn't truly benign in the everyday sense, which inflates the classifier's
+  measured false-positive rate somewhat.
 - Classifier decisions aren't interpretable — no explanation for why a score
   was assigned, unlike heuristics where the matched pattern is known.
 
