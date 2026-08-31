@@ -1,14 +1,12 @@
-"""
-FastAPI proxy: intercepts a prompt, scores it, blocks/flags/logs, then
-(optionally) forwards to the real LLM call. Built Days 10-12.
-Run with: uvicorn service.main:app --reload
-"""
 from fastapi import FastAPI
 from pydantic import BaseModel
 from detectors.heuristic import score as heuristic_score
 from detectors.classifier import score as classifier_score
+from service.db import init_db, log_request
 
 app = FastAPI(title="Injection Detection Firewall")
+
+init_db()  ##runs once, when the service starts
 
 
 class PromptRequest(BaseModel):
@@ -18,25 +16,19 @@ class PromptRequest(BaseModel):
 class PromptVerdict(BaseModel):
     prompt: str
     score: float
-    verdict: str  ##"allow" | "flag" | "block"
-    detector: str  ##which detector actually produced the final score
+    verdict: str
+    detector: str
 
 
 @app.post("/check", response_model=PromptVerdict)
 def check_prompt(req: PromptRequest):
-    h_score = heuristic_score(req.prompt)  ##cheap fast an near-perfect precision
+    h_score = heuristic_score(req.prompt)
 
     if h_score >= 0.5:
-        ##heuristics fired with high confidence block immediately, skip the classifier
-        return PromptVerdict(
-            prompt=req.prompt,
-            score=h_score,
-            verdict="block",
-            detector="heuristic"
-        )
+        log_request(req.prompt, h_score, "block", "heuristic")
+        return PromptVerdict(prompt=req.prompt, score=h_score, verdict="block", detector="heuristic")
 
-    ##heuristics didn't fire fall through to the deeper, more expensive check
-    c_score = classifier_score(req.prompt)
+    c_score = float(classifier_score(req.prompt))  ##convert numpy.float32 to plain python float
 
     if c_score >= 0.7:
         verdict = "block"
@@ -45,9 +37,5 @@ def check_prompt(req: PromptRequest):
     else:
         verdict = "allow"
 
-    return PromptVerdict(
-        prompt=req.prompt,
-        score=c_score,
-        verdict=verdict,
-        detector="classifier"
-    )
+    log_request(req.prompt, c_score, verdict, "classifier")
+    return PromptVerdict(prompt=req.prompt, score=c_score, verdict=verdict, detector="classifier")
