@@ -3,7 +3,9 @@
 A lightweight defence layer that sits between users and an LLM, scoring incoming
 prompts for injection/jailbreak likelihood before they reach the model. Built to
 explore both the security and ML sides of a real, unsolved problem in deployed
-LLM applications — Full write-up: [LLM_Prompt_Injection_Write_Up.pdf](LLM_Prompt_Injection_Write_Up.pdf)
+LLM applications.
+
+Full write-up: [LLM_Prompt_Injection_Write_Up.pdf](LLM_Prompt_Injection_Write_Up.pdf)
 
 ## The Problem
 
@@ -68,12 +70,12 @@ test both layers under attack:
 - **Character-spacing obfuscation** (`I-g-n-o-r-e...`): fully bypassed both
   layers. This is a genuine, unresolved gap.
 - **Base64 / reversed text**: both scored in the "flag" range against the
-  classifier — better resilience than expected, though the exact mechanism
+  classifier: better resilience than expected, though the exact mechanism
   isn't fully understood.
 - **Unicode homoglyphs**: defeated the specific word they targeted, but the
   overall prompt was still caught due to an untouched trigger phrase
   elsewhere in the same sentence.
-- **Multi-turn attacks**: not testable — the service scores single prompts
+- **Multi turn attacks**: not testable: the service scores single prompts
   with no conversation memory, an explicit architectural limitation.
 
 ## Known Limitations
