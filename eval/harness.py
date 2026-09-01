@@ -1,12 +1,5 @@
 """
-Evaluation harness for scoring any detector against the labeled dataset.
-
-A "detector" is any callable: (prompt: str) -> float
-  Returns a score in [0, 1] representing injection/jailbreak likelihood.
-  Thresholding into a binary verdict happens inside the harness so every
-  detector is compared on equal footing (and thresholds can be tuned per model).
-
-Usage:
+usage:
     from eval.harness import evaluate
     from detectors.heuristic import score as heuristic_score
 
